@@ -1,0 +1,348 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raj Cafe · Menu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png" />
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Raj Cafe Logo" height="40" class="me-2" />
+        Raj Cafe
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'menu' %}">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Profile</a></li>
+          {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link btn btn-warning text-dark px-4 py-2 ms-2 rounded-pill fw-bold dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user me-1"></i>Account
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="accountDropdown">
+                <li><a class="dropdown-item py-2" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-2 text-muted"></i>Login</a></li>
+                <li><a class="dropdown-item py-2" href="{% url 'signup' %}"><i class="fas fa-user-plus me-2 text-muted"></i>Sign Up</a></li>
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-slider hero-slider-half">
+    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1600&h=900&fit=crop&crop=center');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&h=900&fit=crop&crop=center');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=1600&h=900&fit=crop&crop=center');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1600&h=900&fit=crop&crop=center');"></div>
+    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=1600&h=900&fit=crop&crop=center');"></div>
+    <div class="hero-content">
+      <div class="container text-light text-center py-5">
+        <h1 class="display-3 fw-bold">Our Menu</h1>
+        <p class="lead">Discover our delicious offerings</p>
+      </div>
+    </div>
+    <div class="slider-indicators"></div>
+    <button class="slider-arrow prev">&#10094;</button>
+    <button class="slider-arrow next">&#10095;</button>
+  </section>
+
+  <main>
+    <section class="container py-5">
+      <h2 class="text-center display-5 fw-semibold mb-5">Our <span class="text-warning">Menu</span></h2>
+      
+      <!-- Coffees -->
+      <h3 class="fw-bold mb-4"><i class="fas fa-mug-hot text-warning me-2"></i>Coffees</h3>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_espresso.jpg' %}" class="card-img-top" alt="Espresso">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Espresso</h5>
+                <span class="text-warning fw-bold">₹150</span>
+              </div>
+              <p class="card-text text-muted">Rich and bold single shot espresso.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_latte.jpg' %}" class="card-img-top" alt="Latte">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Caffe Latte</h5>
+                <span class="text-warning fw-bold">₹220</span>
+              </div>
+              <p class="card-text text-muted">Smooth espresso with steamed milk.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_cappuccino.jpg' %}" class="card-img-top" alt="Cappuccino">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Cappuccino</h5>
+                <span class="text-warning fw-bold">₹200</span>
+              </div>
+              <p class="card-text text-muted">Espresso with foamed milk and cocoa.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_americano.jpg' %}" class="card-img-top" alt="Americano">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Americano</h5>
+                <span class="text-warning fw-bold">₹180</span>
+              </div>
+              <p class="card-text text-muted">Espresso with hot water for a milder taste.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_mocha.jpg' %}" class="card-img-top" alt="Mocha">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Mocha</h5>
+                <span class="text-warning fw-bold">₹250</span>
+              </div>
+              <p class="card-text text-muted">Espresso with chocolate and steamed milk.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_coldbrew.jpg' %}" class="card-img-top" alt="Cold Brew">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Cold Brew</h5>
+                <span class="text-warning fw-bold">₹230</span>
+              </div>
+              <p class="card-text text-muted">Smooth cold-brewed coffee served over ice.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shakes -->
+      <h3 class="fw-bold mb-4"><i class="fas fa-glass-whiskey text-warning me-2"></i>Shakes</h3>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_choc_shake.jpg' %}" class="card-img-top" alt="Chocolate Shake">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Chocolate Shake</h5>
+                <span class="text-warning fw-bold">₹180</span>
+              </div>
+              <p class="card-text text-muted">Rich chocolate milkshake with whipped cream.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_vanilla_shake.jpg' %}" class="card-img-top" alt="Vanilla Shake">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Vanilla Shake</h5>
+                <span class="text-warning fw-bold">₹160</span>
+              </div>
+              <p class="card-text text-muted">Classic vanilla milkshake with a cherry on top.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_strawberry_shake.jpg' %}" class="card-img-top" alt="Strawberry Shake">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Strawberry Shake</h5>
+                <span class="text-warning fw-bold">₹190</span>
+              </div>
+              <p class="card-text text-muted">Fresh strawberry milkshake with real berries.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pastry -->
+      <h3 class="fw-bold mb-4"><i class="fas fa-bread-slice text-warning me-2"></i>Pastry</h3>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_croissant.jpg' %}" class="card-img-top" alt="Croissant">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Croissant</h5>
+                <span class="text-warning fw-bold">₹120</span>
+              </div>
+              <p class="card-text text-muted">Buttery, flaky French croissant.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_muffin.jpg' %}" class="card-img-top" alt="Muffin">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Blueberry Muffin</h5>
+                <span class="text-warning fw-bold">₹100</span>
+              </div>
+              <p class="card-text text-muted">Soft muffin loaded with blueberries.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_danish.jpg' %}" class="card-img-top" alt="Danish">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Cheese Danish</h5>
+                <span class="text-warning fw-bold">₹140</span>
+              </div>
+              <p class="card-text text-muted">Pastry filled with cream cheese and fruit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sandwich -->
+      <h3 class="fw-bold mb-4"><i class="fas fa-utensils text-warning me-2"></i>Sandwich</h3>
+      <div class="row g-4 mb-5">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_club_sandwich.jpg' %}" class="card-img-top" alt="Club Sandwich">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Club Sandwich</h5>
+                <span class="text-warning fw-bold">₹220</span>
+              </div>
+              <p class="card-text text-muted">Triple-layer sandwich with chicken, bacon, and veggies.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_veg_sandwich.jpg' %}" class="card-img-top" alt="Veg Sandwich">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Veg Sandwich</h5>
+                <span class="text-warning fw-bold">₹180</span>
+              </div>
+              <p class="card-text text-muted">Fresh vegetables with cheese on whole wheat bread.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/menu/menu_paneer_sandwich.jpg' %}" class="card-img-top" alt="Paneer Sandwich">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">Paneer Sandwich</h5>
+                <span class="text-warning fw-bold">₹200</span>
+              </div>
+              <p class="card-text text-muted">Grilled sandwich with paneer and spices.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-brand">
+              <img src="{% static 'images/logo.png' %}" alt="Raj Cafe" height="45" class="footer-logo" />
+              <h5 class="footer-brand-name">Raj Cafe</h5>
+            </div>
+            <p class="footer-about">Sip, relax, and enjoy the moment. Since 2020, we've been serving the finest coffee and pastries in town with love and passion.</p>
+            <div class="footer-contact">
+              <p><i class="fas fa-map-marker-alt"></i> Sonari, Jamshedpur, Jharkhand, India</p>
+              <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              <p><i class="fas fa-envelope"></i> info@rajcafe.com</p>
+            </div>
+            <div class="footer-social-wrapper mt-3">
+              <h6 class="footer-social-heading">Follow Us</h6>
+              <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h6 class="footer-heading">Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="{% url 'index' %}"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="{% url 'menu' %}"><i class="fas fa-chevron-right"></i> Menu</a></li>
+              <li><a href="{% url 'about' %}"><i class="fas fa-chevron-right"></i> About Us</a></li>
+              <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h6 class="footer-heading">Our Services</h6>
+            <ul class="footer-links">
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Catering</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Private Events</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Coffee Delivery</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Gift Cards</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h6 class="footer-heading">Opening Hours</h6>
+            <ul class="footer-hours">
+              <li><span>Mon - Fri:</span> 7:00 AM - 10:00 PM</li>
+              <li><span>Saturday:</span> 8:00 AM - 11:00 PM</li>
+              <li><span>Sunday:</span> 8:00 AM - 9:00 PM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">&copy; 2026 <span class="text-warning">Raj Cafe</span>. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <ul class="footer-legal">
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% include 'modals.html' %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

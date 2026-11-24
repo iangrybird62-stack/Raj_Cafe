@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raj Cafe · Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="icon" href="{% static 'images/logo.png' %}" type="image/png" />
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Raj Cafe Logo" height="40" class="me-2" />
+        Raj Cafe
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'menu' %}">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link active" href="{% url 'profile' %}">Profile</a></li>
+          {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link btn btn-warning text-dark px-4 py-2 ms-2 rounded-pill fw-bold dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user me-1"></i>Account
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="accountDropdown">
+                <li><a class="dropdown-item py-2" href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-2 text-muted"></i>Login</a></li>
+                <li><a class="dropdown-item py-2" href="{% url 'signup' %}"><i class="fas fa-user-plus me-2 text-muted"></i>Sign Up</a></li>
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="py-5" style="background-color: var(--bg-cream); min-height: 80vh;">
+    <div class="container">
+      <div class="row">
+        <!-- Profile Sidebar -->
+        <div class="col-lg-4 mb-4">
+          <div class="card shadow-lg border-0" style="border-radius: 20px;">
+            <div class="card-body text-center p-5">
+              <div class="profile-avatar-wrapper mb-4">
+                <i class="fas fa-user-circle text-muted" style="font-size: 100px;"></i>
+              </div>
+              <h3 class="fw-bold mb-1">
+                {% if user.get_full_name %}
+                  {{ user.get_full_name }}
+                {% else %}
+                  {{ user.username|default:"CoffeeLover123" }}
+                {% endif %}
+              </h3>
+              <p class="text-muted mb-4">{{ user.email|default:"user@example.com" }}</p>
+              
+              <div class="d-grid gap-3 mt-4 border-top pt-4">
+                <a href="{% url 'logout' %}" class="btn btn-warning py-2 fw-bold text-dark rounded-pill shadow-sm">
+                  <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
+                <button type="button" class="btn btn-outline-danger py-2 fw-bold rounded-pill" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                  <i class="fas fa-trash-alt me-2"></i> Delete Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="col-lg-8">
+          <!-- Account Details Card -->
+          <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px;">
+            <div class="card-body" style="padding: 50px;">
+              <h4 class="fw-bold mb-4" style="color: var(--text-espresso);">
+                <i class="fas fa-id-card me-2 text-warning"></i> Account Details
+              </h4>
+              <div class="row g-4">
+                <div class="col-md-6">
+                  <p class="text-muted small fw-bold text-uppercase mb-1">Full Name</p>
+                  <p class="fs-5 fw-semibold mb-0" style="color: var(--text-espresso);">
+                    {% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user.username|default:"CoffeeLover123" }}{% endif %}
+                  </p>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-muted small fw-bold text-uppercase mb-1">Email Address</p>
+                  <p class="fs-5 fw-semibold mb-0" style="color: var(--text-espresso);">
+                    {{ user.email|default:"user@example.com" }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Delete Account Modal -->
+  <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow" style="border-radius: 15px;">
+        <div class="modal-header border-0 bg-danger text-white" style="border-radius: 15px 15px 0 0;">
+          <h5 class="modal-title fw-bold" id="deleteAccountModalLabel"><i class="fas fa-exclamation-triangle me-2"></i> Delete Account</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <p class="fs-5 mb-1">Are you absolutely sure?</p>
+          <p class="text-muted small">This action cannot be undone. All your data, including order history, will be permanently deleted.</p>
+        </div>
+        <div class="modal-footer border-0 justify-content-center pb-4">
+          <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">Cancel</button>
+          <a href="#" class="btn btn-danger px-4 rounded-pill fw-bold">Yes, Delete My Account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="footer-brand">
+              <img src="{% static 'images/logo.png' %}" alt="Raj Cafe" height="45" class="footer-logo" />
+              <h5 class="footer-brand-name">Raj Cafe</h5>
+            </div>
+            <p class="footer-about">Sip, relax, and enjoy the moment. Since 2020, we've been serving the finest coffee and pastries in town with love and passion.</p>
+            <div class="footer-contact">
+              <p><i class="fas fa-map-marker-alt"></i> Sonari, Jamshedpur, Jharkhand, India</p>
+              <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+              <p><i class="fas fa-envelope"></i> info@rajcafe.com</p>
+            </div>
+            <div class="footer-social-wrapper mt-3">
+              <h6 class="footer-social-heading">Follow Us</h6>
+              <div class="footer-social">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <h6 class="footer-heading">Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="{% url 'index' %}"><i class="fas fa-chevron-right"></i> Home</a></li>
+              <li><a href="{% url 'menu' %}"><i class="fas fa-chevron-right"></i> Menu</a></li>
+              <li><a href="{% url 'about' %}"><i class="fas fa-chevron-right"></i> About Us</a></li>
+              <li><a href="{% url 'contact' %}"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h6 class="footer-heading">Our Services</h6>
+            <ul class="footer-links">
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Catering</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Private Events</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Coffee Delivery</a></li>
+              <li><a href="#"><i class="fas fa-chevron-right"></i> Gift Cards</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <h6 class="footer-heading">Opening Hours</h6>
+            <ul class="footer-hours">
+              <li><span>Mon - Fri:</span> 7:00 AM - 10:00 PM</li>
+              <li><span>Saturday:</span> 8:00 AM - 11:00 PM</li>
+              <li><span>Sunday:</span> 8:00 AM - 9:00 PM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">&copy; 2026 <span class="text-warning">Raj Cafe</span>. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <ul class="footer-legal">
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a></li>
+              <li><a href="#" data-bs-toggle="modal" data-bs-target="#cookiesModal">Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% include 'modals.html' %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
